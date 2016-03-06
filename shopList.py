@@ -1,19 +1,29 @@
-list = []
+f = open("foodList.txt", 'r+')
+shoppingList = f.read().splitlines()
 
-food = ("Your shopping list is empty. Name a new item: ")
-print(food)
-food = input()
-list.append(food)
+item = None
 
-nextFood = ("Your shopping list contains {}. Name a new item: ".format(list))
-print(nextFood)
-
-while len(list) != 0:
-	nextFood = input()
-	if nextFood == "done":
-		print("Ok, your list is {}. Good luck!".format(list))
-		break
+while item != '':
+	if len(shoppingList) == 0:
+		print("Your list is empty.")
 	else:
-		list.append(nextFood)
-		done = "Type 'done' if list is finished or a new item."
-		print("Your shopping list contains {}. {}".format(list, done))
+		print("Your shopping list contains:")
+		itemNumber = 0
+		for thing in shoppingList:
+			itemNumber += 1
+			print("{}. {}".format(itemNumber, thing))
+
+	item = input("What item would you like to add? ")
+
+	if item != '':
+		shoppingList.append(item)
+	
+f.seek(0)
+f.truncate()
+
+for item in shoppingList:
+	f.write(item + '\n')
+
+print("This is your list! Good luck shopping!")
+
+f.close()
